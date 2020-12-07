@@ -1,0 +1,69 @@
+---
+title: "Intro-to-seecolor-package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Intro-to-seecolor-package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r comment="", results="asis", echo=FALSE}
+suppressMessages({
+  library(seecolor)
+  library(ggplot2)
+  library(fansi)
+  library(crayon)
+})
+old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
+options(crayon.enabled=TRUE)
+```
+
+## 1. Use the cursor to select object to print in the console.
+
+```{r, eval = FALSE}
+# Highlight objects by cursor to show the contained colors
+pick_color()
+
+# Change output styles, "ribbon" or "mosaic"
+pick_color(type = "r")
+
+# Change the length of the color blocks
+pick_color(blank.len = 1)
+```
+
+![Pick colors](https://raw.githubusercontent.com/lovestat/seecolor/master/man/figures/2.gif)
+
+## 2. Use `print_color` to print color literals, palettes and ggplot2 objects.
+
+### Note: the colors may appear not distingushable in the html version, but they always work fine in console.
+
+```{r}
+print_color(c("red", "navy", "pink", "#E58700", "limegreen"))
+print_color(c("red", "navy", "pink", "#E58700", "limegreen"), 
+            type = "r")
+
+print_color(palette(rainbow(6)), blank.len = 1)
+print_color(palette(rainbow(6)), type = 'r')
+
+p1 <- ggplot(mpg) +
+  geom_point(aes(displ, cyl, color = manufacturer))
+print_color(p1)
+print_color(p1, type = 'r')
+```
+
+
+## 3. Use `open_sample()` to open a sample file to have an instant try.
+
+```{r, eval=FALSE}
+# Open the pre-defined test file
+open_sample()
+```
+
